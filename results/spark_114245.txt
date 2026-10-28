@@ -1,0 +1,120 @@
+
+===== 1. OVERVIEW =====
+customers	churned	churn_rate_pct	days_of_data	events_processed
+3333	483	14.49	10	164759
+
+===== 2. CHURNED vs ACTIVE CUSTOMERS (monthly averages) =====
+feature	active_avg	churned_avg	diff_pct
+account_weeks	100.79	102.66	1.9
+contract_renewal	0.93	0.72	-23.4
+data_plan	0.3	0.17	-43.9
+call_minutes	173.76	206.41	18.8
+num_calls	99.85	101.17	1.3
+avg_call_duration	1.82	2.15	18.2
+roaming_minutes	10.14	10.85	6.9
+data_gb	0.86	0.54	-36.6
+num_recharges	4.51	4.7	4.1
+recharge_amount	65.0	72.72	11.9
+topup_amount	10.31	10.99	6.6
+days_since_recharge	4.73	4.66	-1.4
+complaints	1.43	2.24	56.3
+
+===== 3a. CHURN RATE BY COMPLAINTS PER MONTH =====
+complaints	customers	churned	churn_rate_pct
+0	2120	267	12.6
+3	828	121	14.6
+5+	385	95	24.7
+
+===== 3b. CHURN RATE BY SERVICE PLAN =====
+plan	customers	churned	churn_rate_pct
+Data plan / Not renewed	92	36	39.1
+Data plan / Renewed	830	44	5.3
+No data plan / Not renewed	231	101	43.7
+No data plan / Renewed	2180	302	13.9
+
+===== 3c. CHURN RATE BY CALL MINUTES =====
+call_minutes_band	customers	churned	churn_rate_pct
+1) Low (<= 132.7)	808	92	11.4
+2) Medium-low (<= 173.5)	857	83	9.7
+3) Medium-high (<= 216.9)	812	96	11.8
+4) High (> 216.9)	856	212	24.8
+
+===== 3d. CHURN RATE BY RECHARGE AMOUNT =====
+recharge_band	customers	churned	churn_rate_pct
+1) Low (<= 16.0)	808	111	13.7
+2) Medium-low (<= 57.5)	857	98	11.4
+3) Medium-high (<= 97.5)	812	133	16.4
+4) High (> 97.5)	856	141	16.5
+
+===== 3e. CHURN RATE BY DATA USAGE (GB) =====
+data_band	customers	churned	churn_rate_pct
+1) Low (<= 0.0)	1813	322	17.8
+3) Medium-high (<= 1.4)	664	85	12.8
+4) High (> 1.4)	856	76	8.9
+
+===== 3f. CHURN RATE BY DAYS SINCE LAST RECHARGE =====
+recharge_recency_band	customers	churned	churn_rate_pct
+1) Low (<= 1.0)	920	135	14.7
+2) Medium-low (<= 4.0)	860	128	14.9
+3) Medium-high (<= 8.0)	724	106	14.6
+4) High (> 8.0)	829	114	13.8
+
+===== 4a. RANDOM FOREST MODEL QUALITY (on 20% test data) =====
+auc	accuracy_pct	churners_caught_pct
+0.785	82.3	56.4
+
+===== 4b. TOP CHURN INDICATORS (feature importance) =====
+indicator	importance_pct
+call_minutes	18.87
+contract_renewal	17.78
+avg_call_duration	13.71
+complaints	10.21
+data_gb	7.93
+roaming_minutes	5.89
+data_plan	5.73
+account_weeks	4.86
+num_calls	4.59
+recharge_amount	4.42
+topup_amount	2.21
+days_since_recharge	2.16
+num_recharges	1.64
+
+===== 5a. ACTIVE CUSTOMERS AT RISK =====
+active_customers	risk_50pct_or_more
+2850	305
+
+===== 5b. TOP 20 HIGH-RISK ACTIVE CUSTOMERS =====
+customerId	risk_pct	complaints	call_minutes	data_gb	recharge_amount	days_since_recharge	contract_renewal	data_plan
+C0781	82.6	0.0	294.21	0.0	110.76	4.0	0	0
+C1243	82.5	0.0	312.9	0.0	130.05	3.0	0	0
+C2693	81.4	0.0	317.28	0.0	66.87	7.0	0	0
+C0805	81.1	0.0	334.05	0.0	129.48	6.0	1	0
+C1296	78.8	0.0	331.2	0.0	86.4	0.0	1	0
+C1511	78.7	3.0	287.64	0.0	118.95	4.0	1	0
+C2804	77.5	0.0	293.94	0.0	144.0	2.0	1	0
+C2462	77.3	0.0	291.69	0.0	101.49	8.0	1	0
+C1105	77.2	0.0	291.48	0.0	105.69	4.0	1	0
+C2989	77.1	6.0	295.86	0.0	148.02	4.0	1	0
+C0535	76.4	3.0	347.49	0.27	133.74	0.0	1	0
+C1495	76.4	0.0	288.63	0.0	67.32	0.0	1	0
+C1993	76.3	0.0	336.78	0.2	111.57	1.0	1	0
+C1084	75.7	0.0	282.69	0.0	68.58	2.0	0	0
+C1259	75.7	0.0	261.21	0.0	0.0	10.0	0	0
+C2691	75.7	0.0	280.77	0.0	129.48	2.0	1	0
+C0357	75.6	3.0	259.98	0.0	82.02	6.0	0	0
+C3257	75.2	0.0	258.03	0.12	131.22	5.0	1	0
+C0364	75.0	3.0	322.8	0.13	90.36	1.0	1	0
+C3148	74.1	0.0	294.09	0.0	63.42	7.0	1	0
+
+===== 6. ACTIVITY PER SIMULATED DAY =====
+sim_day	events	complaints	recharge_amount
+1	16429	171	7754.05
+2	16514	175	7236.57
+3	16500	173	6981.12
+4	16271	176	7240.89
+5	16533	149	7218.92
+6	16601	175	7270.96
+7	16345	169	7378.47
+8	16421	177	7165.1
+9	16558	178	7648.06
+10	16587	181	7566.75

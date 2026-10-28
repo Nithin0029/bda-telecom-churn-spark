@@ -1,0 +1,10 @@
+# dataset (download separately - see README)
+telecom_dataset/
+*.zip
+# generated data
+exports/
+last_export.txt
+spark_errors.log
+spark-warehouse/
+__pycache__/
+*.pyc
